@@ -8,11 +8,10 @@ const router = Router()
 //REGISTER 
 router.post("/register", async (req:Request, res:Response): Promise<any> => {
       const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
+            email: req.body.email as string,
             password: CryptoJS.AES.encrypt(
-                  req.body.password,
-                  process.env.PASS_SEC
+                  req.body.password as string,
+                  process.env.PASS_SEC as string
             ).toString()
       });
 
@@ -27,21 +26,21 @@ router.post("/register", async (req:Request, res:Response): Promise<any> => {
 //LOGIN
 router.post("/login", async (req:Request, res:Response): Promise<any> => {
       try {
-            const user:any = await User.findOne({ username: req.body.username });
+            const user:any = await User.findOne({ email: req.body.email });
             !user && res.status(401).json("Wrong credentials!");
             const hashPassword = CryptoJS.AES.decrypt(
-                  user.password,
-                  process.env.PASS_SEC
+                  user.password as string,
+                  process.env.PASS_SEC as string
             );
             const OriginalPassword:string = hashPassword.toString(CryptoJS.enc.Utf8);
             OriginalPassword !== req.body.password &&
             res.status(401).json("Wrong credentials!");
             const accessToken = jwt.sign(
                   {
-                        id: user._id,
-                        isAdmin: user.isAdmin,
+                        id: user._id as string,
+                        isAdmin: user.isAdmin as boolean,
                   },
-                  process.env.JWT_SEC,
+                  process.env.JWT_SEC as string,
                   { expiresIn: "1d" }
             );
             const { password, ...others } = user._doc;
@@ -50,6 +49,8 @@ router.post("/login", async (req:Request, res:Response): Promise<any> => {
             res.status(500).json;
       }
 });
+
+export default router;
 
 
 
