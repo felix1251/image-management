@@ -50,6 +50,4 @@ router.get("/", verifyTokenAndAdmin, async (req:Request, res:Response): Promise<
       }
 });
 
-
-
 export default router;
