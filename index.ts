@@ -4,10 +4,8 @@ import mongoose from "mongoose"
 const app = express()
 dotenv.config()
 
-const mongoUrl:string|undefined = process.env.MONGO_URL
-
 mongoose.set('strictQuery', true);
-mongoose.connect(mongoUrl as string)
+mongoose.connect(process.env.MONGO_URL as string)
       .then(() => console.log("DBconnection Successful"))
       .catch((err) => {
             console.log(err);
