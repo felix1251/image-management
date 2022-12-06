@@ -11,7 +11,7 @@ const validatePassword = (password:string): boolean => {
       return re.test(password)
 }
 
-var passwordErrMsg:string = "password: must be eight characters long, "
+var passwordErrMsg:string = "must be eight characters long, "
 passwordErrMsg += "must contain at least one uppercase character, "
 passwordErrMsg += "must contain at least one lowercase character,"
 passwordErrMsg += "must contain at least one digit, "

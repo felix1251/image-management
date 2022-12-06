@@ -15,6 +15,7 @@ const verifyToken = (req: any, res: Response, next:Function): void|Response =>{
       }
 }
 
+//verify if owner or admin
 const verifyTokenAndAuthorization = (req:any, res:Response, next:Function): void|Response=> {
       verifyToken(req, res, () => {
             if (req.user.id === req.params.id || req.user.isAdmin) {
@@ -25,6 +26,7 @@ const verifyTokenAndAuthorization = (req:any, res:Response, next:Function): void
       });
 };
 
+//verify only admin
 const verifyTokenAndAdmin = (req:any, res:Response, next:Function): void|Response => {
       verifyToken(req, res, () => {
       if (req.user.isAdmin) {

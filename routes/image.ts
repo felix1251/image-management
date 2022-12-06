@@ -4,7 +4,7 @@ import { Router, Request, Response } from 'express';
 
 const router = Router()
 
-//CREATE
+//CREATE IMAGE
 router.post("/", verifyTokenAndAuthorization ,async (req:Request, res:Response): Promise<any> => {
       const newImage = new Image(req.body);
       try {
