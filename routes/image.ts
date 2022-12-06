@@ -10,7 +10,7 @@ router.post("/", verifyTokenAndAuthorization ,async (req:Request, res:Response):
       const newImage = new Image(req.body);
       try {
             const savedImage = await newImage.save();
-            res.status(200).json(savedImage);
+            res.status(201).json(savedImage);
       } catch (err) {
             res.status(500).json(err);
       }

@@ -1,5 +1,5 @@
 import User from "../models/User"
-import { verifyTokenAndAuthorization } from "./verifyToken";
+import { verifyTokenAndAuthorization, verifyTokenAndAdmin} from "./verifyToken";
 import { Router, Request, Response } from 'express';
 
 const router = Router()
@@ -19,5 +19,16 @@ router.put("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response
             res.status(500).json(err);
       }
 });
+
+//delete certain user (admin only)
+router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+      try {
+            await User.findByIdAndDelete(req.params.id);
+            res.status(200).json("Cart has been deleted..");
+      } catch (err) {
+            res.status(500).json(err);
+      }
+});
+
 
 export default router;

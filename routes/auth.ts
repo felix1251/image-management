@@ -7,7 +7,6 @@ const router = Router()
 
 //REGISTER 
 router.post("/register", async (req:Request, res:Response): Promise<any> => {
-      console.log(req.body)
       const newUser = new User({
             email: req.body.email as string,
             name: req.body.name as string,
@@ -46,7 +45,7 @@ router.post("/login", async (req:Request, res:Response): Promise<any> => {
                   { expiresIn: "1d" }
             );
             const { password, ...others } = user._doc;
-            res.status(200).json({ ...others, accessToken });
+            res.status(201).json({ ...others, accessToken });
       } catch (err) {
             res.status(500).json;
       }
