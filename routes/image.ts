@@ -32,10 +32,26 @@ router.get("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response
 });
 
 //delete single image
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.delete("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any> => {
       try {
             await Image.findByIdAndDelete(req.params.id);
             res.status(200).json("Product has been deleted..");
+      } catch (err) {
+            res.status(500).json(err);
+      }
+});
+
+//delete single image
+router.put("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any> => {
+      try {
+            const updatedProduct = await Image.findByIdAndUpdate(
+                  req.params.id,
+                  {
+                        $set: req.body,
+                  },
+                  { new: true }
+            );  
+            res.status(200).json(updatedProduct);
       } catch (err) {
             res.status(500).json(err);
       }
