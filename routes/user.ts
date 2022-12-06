@@ -30,5 +30,15 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
       }
 });
 
+//get single user (only admin)
+router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+      try {
+            const user = await User.findById(req.params.id);
+            res.status(200).json(user);
+      } catch (err) {
+            res.status(500).json(err);
+      }
+});
+
 
 export default router;
