@@ -11,10 +11,9 @@ const getPexelImagesAndUpload = async (res:Response): Promise<any> => {
       try {
             const pexelRes = await fetch(`https://api.pexels.com/v1/search?query=${randomSelect}&per_page=5`, { headers: { Authorization: process.env.PEXEL_KEY as string } })
             const data = await pexelRes.json();
-            const images = data.photos.map((item:any) => item.src.small)
-
-            let res_promises = images.map((img:string) => new Promise((resolve, reject) => {
-                        cloudinary.uploader.upload(img, { folder: "images" }, (error:any, result:any): void => {
+            
+            let res_promises = data.photos.map((item:any) => new Promise((resolve, reject) => {
+                        cloudinary.uploader.upload(item.src.small, { folder: "images" }, (error:any, result:any): void => {
                               if(error) reject(error)
                               else resolve(result)
                         })
