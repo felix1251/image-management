@@ -7,9 +7,10 @@ const getPexelImagesAndUpload = async (res:Response): Promise<any> => {
 
       const categories:Array<string> = ["people", "ocean", "nature", "cars", "tigers", "kids", "computer", "fish", "cows"]
       const randomSelect:string = categories[Math.floor(Math.random() * categories.length)];
+      const limit: number = 5 
 
       try {
-            const pexelRes = await fetch(`https://api.pexels.com/v1/search?query=${randomSelect}&per_page=5`, { headers: { Authorization: process.env.PEXEL_KEY as string } })
+            const pexelRes = await fetch(`https://api.pexels.com/v1/search?query=${randomSelect}&per_page=${limit}`, { headers: { Authorization: process.env.PEXEL_KEY as string } })
             const data = await pexelRes.json();
             
             let res_promises = data.photos.map((item:any) => new Promise((resolve, reject) => {
@@ -28,7 +29,6 @@ const getPexelImagesAndUpload = async (res:Response): Promise<any> => {
             const options = { ordered: true };
             await Images.insertMany(imageUrls, options);
 
-            const limit: number = 5 
             const showImages = await Images.find().sort({ createdAt: -1 }).limit(limit);
 
             res.status(200).json({limit: limit, data: showImages})
