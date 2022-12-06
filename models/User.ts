@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import CryptoJS from "crypto-js"
 
 //custom validation
 const validateEmail = (email:string): boolean => {
@@ -7,8 +8,14 @@ const validateEmail = (email:string): boolean => {
 };
 
 const validatePassword = (password:string): boolean => {
-      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{0,8}$/
-      return re.test(password)
+      const hashPassword = CryptoJS.AES.decrypt(
+            password as string,
+            process.env.PASS_SEC as string
+      );
+      const OriginalPassword:string = hashPassword.toString(CryptoJS.enc.Utf8);
+      
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+      return re.test(OriginalPassword)
 }
 
 var passwordErrMsg:string = "must be eight characters long, "
