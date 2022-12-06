@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URL as string)
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoute);
-app.use("/user", userRoute);
+app.use("/users", userRoute);
 app.use("/images", imageRoute);
 
 app.listen(process.env.PORT || 5000, () => {
