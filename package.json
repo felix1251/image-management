@@ -2,7 +2,7 @@
   "name": "image-management",
   "version": "1.0.0",
   "description": "api",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "nodemon index.js"
   },
