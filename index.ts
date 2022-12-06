@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import authRoute from "./routes/auth";
+import imageRoute from "./routes/image";
 import cors from "cors"
 const app = express()
 dotenv.config()
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGO_URL as string)
 app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoute);
+app.use("/api/image", imageRoute);
 
 app.listen(process.env.PORT || 5000, () => {
       console.log("server is running")
