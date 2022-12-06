@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { Response } from 'express';
 
-const verifyToken = (req: any, res: Response, next:any): void|Response =>{
+const verifyToken = (req: any, res: Response, next:Function): void|Response =>{
       const authHeader:string = req.headers.token as string;
       if (authHeader){
             const token:string = authHeader.split(" ")[1];
@@ -15,7 +15,7 @@ const verifyToken = (req: any, res: Response, next:any): void|Response =>{
       }
 }
 
-const verifyTokenAndAuthorization = (req:any, res:Response, next:any): void|Response=> {
+const verifyTokenAndAuthorization = (req:any, res:Response, next:Function): void|Response=> {
       verifyToken(req, res, () => {
             if (req.user.id === req.params.id || req.user.isAdmin) {
                   next();
@@ -25,7 +25,7 @@ const verifyTokenAndAuthorization = (req:any, res:Response, next:any): void|Resp
       });
 };
 
-const verifyTokenAndAdmin = (req:any, res:Response, next:any): void|Response => {
+const verifyTokenAndAdmin = (req:any, res:Response, next:Function): void|Response => {
       verifyToken(req, res, () => {
       if (req.user.isAdmin) {
             next();
