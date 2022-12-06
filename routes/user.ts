@@ -1,9 +1,10 @@
 import User from "../models/User"
 import { verifyTokenAndAuthorization } from "./verifyToken";
 import { Router, Request, Response } from 'express';
+
 const router = Router()
 
-//update user if only user and admin
+//update user if only owner or admin access
 router.put("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any> => {
       try {
             const updateUser = await User.findByIdAndUpdate(
@@ -18,3 +19,5 @@ router.put("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response
             res.status(500).json(err);
       }
 });
+
+export default router;

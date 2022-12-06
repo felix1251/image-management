@@ -7,7 +7,7 @@ const verifyToken = (req: any, res: Response, next:Function): void|Response =>{
             const token:string = authHeader.split(" ")[1];
             jwt.verify(token, process.env.JWT_SEC as string, (err:any, user:any) => {
                   if (err) res.status(403).json("Token is not valid");
-                  req.user = user as {};
+                  req.user = user;
                   next();
             });
       }else {
@@ -15,10 +15,10 @@ const verifyToken = (req: any, res: Response, next:Function): void|Response =>{
       }
 }
 
-//verify if owner or admin
+//verify if user or admin
 const verifyTokenAndAuthorization = (req:any, res:Response, next:Function): void|Response=> {
       verifyToken(req, res, () => {
-            if (req.user.id === req.params.id || req.user.isAdmin) {
+            if (req.user.id || req.user.isAdmin) {
                   next();
             } else {
                   res.status(403).json("You are not allowed to do that!");
@@ -29,11 +29,11 @@ const verifyTokenAndAuthorization = (req:any, res:Response, next:Function): void
 //verify only admin
 const verifyTokenAndAdmin = (req:any, res:Response, next:Function): void|Response => {
       verifyToken(req, res, () => {
-      if (req.user.isAdmin) {
-            next();
-      } else {
-            res.status(403).json("You are not allowed to do that!");
-      }
+            if (req.user.isAdmin) {
+                  next();
+            } else {
+                  res.status(403).json("You are not allowed to do that!");
+            }
       });
 };
 
