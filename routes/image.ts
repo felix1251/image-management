@@ -1,7 +1,7 @@
 import Image from "../models/Images"
 import { verifyTokenAndAuthorization } from "./verifyToken";
 import { Router, Request, Response } from 'express';
-import { getPexelImages } from "../pexel/index"
+import { getPexelImagesAndUpload } from "../integrations/index"
 
 const router = Router()
 
@@ -18,7 +18,7 @@ router.post("/", verifyTokenAndAuthorization ,async (req:Request, res:Response):
 
 //get images
 router.get("/", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any> => {
-      getPexelImages(res)
+      getPexelImagesAndUpload(res)
 });
 
 router.get("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any>=> {
