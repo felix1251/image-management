@@ -44,8 +44,14 @@ router.post("/login", async (req:Request, res:Response): Promise<any> => {
                   process.env.JWT_SEC as string,
                   { expiresIn: "1d" }
             );
+            const refreshToken = jwt.sign(
+                  {
+                        id: user._id as string,
+                  }, process.env.JWT_REFRESH_SEC as string, 
+                  { expiresIn: '7d' }
+            );
             const { password, ...others } = user._doc;
-            res.status(201).json({ ...others, accessToken });
+            res.status(201).json({ ...others, accessToken, refreshToken });
       } catch (err) {
             res.status(500).json;
       }

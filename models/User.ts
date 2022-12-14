@@ -20,7 +20,7 @@ const validatePassword = (password:string): boolean => {
 
 var passwordErrMsg:string = "must be eight characters long, "
 passwordErrMsg += "must contain at least one uppercase character, "
-passwordErrMsg += "must contain at least one lowercase character,"
+passwordErrMsg += "must contain at least one lowercase character, "
 passwordErrMsg += "must contain at least one digit, "
 passwordErrMsg += "must contain at least one special character"
 
