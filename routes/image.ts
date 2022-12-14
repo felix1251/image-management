@@ -5,16 +5,16 @@ import { getPexelImagesAndUpload } from "../integrations/index"
 
 const router = Router()
 
-//CREATE IMAGE
-router.post("/", verifyTokenAndAuthorization ,async (req:Request, res:Response): Promise<any> => {
-      const newImage = new Image(req.body);
-      try {
-            const savedImage = await newImage.save();
-            res.status(201).json(savedImage);
-      } catch (err) {
-            res.status(500).json(err);
-      }
-});
+// //CREATE IMAGE
+// router.post("/", verifyTokenAndAuthorization ,async (req:Request, res:Response): Promise<any> => {
+//       const newImage = new Image(req.body);
+//       try {
+//             const savedImage = await newImage.save();
+//             res.status(201).json(savedImage);
+//       } catch (err) {
+//             res.status(500).json(err);
+//       }
+// });
 
 //get images
 router.get("/", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any> => {
@@ -41,7 +41,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req:Request, res:Respo
       }
 });
 
-//delete single image
+//updating single image
 router.put("/:id", verifyTokenAndAuthorization, async (req:Request, res:Response): Promise<any> => {
       try {
             const updatedProduct = await Image.findByIdAndUpdate(
