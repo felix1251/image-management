@@ -38,7 +38,8 @@ const UserSchema = new mongoose.Schema(
                   required: true,
                   validate: [validatePassword, passwordErrMsg]
             },
-            isAdmin: {type: Boolean, default: false}
+            isAdmin: {type: Boolean, default: false},
+            refreshTokens: [String],
       },
       {timestamps: true}
 );

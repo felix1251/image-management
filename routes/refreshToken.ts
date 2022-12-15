@@ -23,9 +23,9 @@ router.post('/', async (req:Request, res:Response) => {
             {
               id: user._id as string,
             }, process.env.JWT_REFRESH_SEC as string, 
-            { expiresIn: '7d' }
+            { expiresIn: '30d' }
           );
-          const { password, ...others } = user._doc;
+          const { password, refreshTokens, ...others } = user._doc;
           return res.json({...others, accessToken, refreshToken })
         }catch (err2){
           return res.status(406).json({ message: 'Unauthorized', error: err2 })
